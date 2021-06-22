@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+        stages {
+        stage('Tardid') {
+            steps {
+                echo 'Hello Tardid'
+            }
+        }
+        stage('GIT HUB') {
+            steps {
+             checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], 
+userRemoteConfigs: [[credentialsId: 'cc577e26-79f4-47f0-9128-6216c916b4f5', 
+url: 'https://github.com/ambith/sahil.git']]])
+            }
+        }
+        stage ("compile package the code") {
+                steps {
+                   sh "mvn clean package"
+                }
+            }
+        
+        }
+    }
